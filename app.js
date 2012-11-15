@@ -25,6 +25,7 @@ function handleFileSelect(evt)
 
   onResizeFiles(files, function(dataURI){
     var blob = dataURLToBlob(dataURI);
+    blob.name = files[0].name;
     uploadFile(blob);
   });
 

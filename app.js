@@ -21,11 +21,12 @@ function handleFileSelect(evt)
 {
   setProgress(0, 'Upload started.');
 
-  var files = evt.target.files;
+  var file = evt.target.files[0];
 
-  onResizeFiles(files, function(dataURI){
+  onResizeFiles(file, function(dataURI){
     var blob = dataURLToBlob(dataURI);
-    blob.name = files[0].name;
+    blob.name = file.name;
+
     uploadFile(blob);
   });
 

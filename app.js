@@ -42,16 +42,29 @@ function onResizeFiles(files, callback)
   var img = document.createElement('img');
   var reader = new FileReader();
 
-  var canvas = document.getElementById('canvas');
-  var context = canvas.getContext('2d');
-
-  reader.onload = function(e) {
-    img.src = e.target.result;
-    context.drawImage(img, 0, 0);
+  img.onload = function(e) {
+    // Create a canvas with the desired dimensions
+    var canvas = document.createElement("canvas");
     canvas.width = 50;
     canvas.height = 50;
 
-    callback(canvas.toDataURL('image/jpg'));
+    // Scale and draw the source image to the canvas
+    canvas.getContext("2d").drawImage(img, 0, 0, 50, 50);
+
+    // Convert the canvas to a data URL in PNG format
+    callback(canvas.toDataURL());
+  }
+
+  reader.onload = function(e) {
+    // var canvas = document.getElementById('canvas');
+    // canvas.width = 50;
+    // canvas.height = 50;
+
+    // var context = canvas.getContext('2d');
+
+    // context.drawImage(img, 0, 0);
+    img.src = e.target.result;
+    // callback(canvas.toDataURL('image/jpg'));
   }
   reader.readAsDataURL(file);
 }

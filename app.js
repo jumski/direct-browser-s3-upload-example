@@ -23,11 +23,36 @@ function handleFileSelect(evt)
 
   var files = evt.target.files;
 
-  var output = [];
-  for (var i = 0, f; f = files[i]; i++)
-  {
-    uploadFile(f);
+  onResizeFiles(files, function(file){
+    uploadFile(file);
+  });
+
+  // var output = [];
+  // for (var i = 0, f; f = files[i]; i++)
+  // {
+  //   // console.log(f);
+  //   // uploadFile(f);
+  // }
+}
+
+function onResizeFiles(files, callback)
+{
+  var file = files[0];
+  var img = document.createElement('img');
+  var reader = new FileReader();
+
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+
+  reader.onload = function(e) {
+    img.src = e.target.result;
+    context.drawImage(img, 0, 0);
+    canvas.width = 50;
+    canvas.height = 50;
+
+    callback(canvas.toDataURL('image/jpg'));
   }
+  reader.readAsDataURL(file);
 }
 
 /**

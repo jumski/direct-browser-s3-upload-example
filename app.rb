@@ -15,6 +15,8 @@ S3_BUCKET='/test-direct-upload'
 EXPIRE_TIME=3000
 S3_URL='http://s3-ireland.amazonaws.com'
 
+INVALID_FILENAME_CHARS = /[^\.a-z0-9_-]+/i
+
 get '/' do
   send_file 'index.html'
 end
@@ -28,7 +30,7 @@ get '/app.js' do
 end
 
 get '/signput' do
-  objectName = "/#{params['name']}"
+  objectName = '/' + params['name'].gsub!(INVALID_FILENAME_CHARS, '-')
 
   mimeType = params['type']
   expires = Time.now.to_i + EXPIRE_TIME

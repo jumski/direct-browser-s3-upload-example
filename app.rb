@@ -30,7 +30,7 @@ get '/app.js' do
 end
 
 get '/signput' do
-  objectName = '/' + params['name'].gsub!(INVALID_FILENAME_CHARS, '-')
+  objectName = '/' + params['name'].gsub(INVALID_FILENAME_CHARS, '-')
 
   mimeType = params['type']
   expires = Time.now.to_i + EXPIRE_TIME

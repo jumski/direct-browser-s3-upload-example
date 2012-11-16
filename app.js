@@ -106,6 +106,12 @@ function uploadToS3(file, url)
     xhr.setRequestHeader('Content-Type', file.type);
     xhr.setRequestHeader('x-amz-acl', 'public-read');
 
+    xhr.onabort = function(e) {
+      window.ae=e;
+      console.log(e);
+      console.log(arguments);
+    }
+
     xhr.send(file);
   }
 }

@@ -36,7 +36,11 @@ function handleFileSelect(evt)
 function executeOnSignedUrl(file, callback)
 {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'signput?name=' + file.name + '&type=' + file.type, true);
+  // console.log('before sign:');
+  // console.log('signput?name=' + (file.name) + '&type=' + file.type)
+  fileName = encodeURIComponent(file.name)
+  fileType = encodeURIComponent(file.type)
+  xhr.open('GET', 'signput?name=' + fileName + '&type=' + fileType, true);
 
   // Hack to pass bytes through unprocessed.
   xhr.overrideMimeType('text/plain; charset=x-user-defined');
@@ -105,12 +109,6 @@ function uploadToS3(file, url)
 
     xhr.setRequestHeader('Content-Type', file.type);
     xhr.setRequestHeader('x-amz-acl', 'public-read');
-
-    xhr.onerror = function(e) {
-      window.ae=e;
-      console.log(e);
-      console.log(arguments);
-    }
 
     xhr.send(file);
   }
